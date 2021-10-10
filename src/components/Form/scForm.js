@@ -7,6 +7,7 @@ const Wrapper = styled.form`
   display: flex;
   flex-direction: column;
   height: min(75vh, 650px);
+  width: min(90vw, 400px);
 `;
 
 export default Wrapper;
