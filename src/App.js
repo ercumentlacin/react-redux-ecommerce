@@ -1,9 +1,9 @@
-import React from 'react';
 import Routes from 'routes/index';
+import AppWrapper from 'style/scApp';
 
 const App = () => {
   console.log('hello');
-  return <div>{Routes}</div>;
+  return <AppWrapper>{Routes}</AppWrapper>;
 };
 
 export default App;

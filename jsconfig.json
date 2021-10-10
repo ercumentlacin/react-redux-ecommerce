@@ -1,9 +1,6 @@
 {
   "compilerOptions": {
-    "jsx": "react",
-    "baseUrl": "src",
-    "module": "ES6"
+    "baseUrl": "src"
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules"]
+  "include": ["src"]
 }

@@ -127,3 +127,18 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Karla', sans-serif;
+}
+
+#root {
+  background-color: #1b262c;
+  min-height: 100vh;
+}
