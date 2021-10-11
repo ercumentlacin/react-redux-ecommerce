@@ -1,3 +1,4 @@
+import Header from 'components/Header';
 import { lazy, Suspense } from 'react';
 import { BrowserRouter, Switch } from 'react-router-dom';
 
@@ -31,8 +32,18 @@ const routerPaths = [
   },
 ];
 
+const renderHeaderComponent = () => {
+  const { pathname } = window.location;
+  const condition = ['/login', '/register'];
+  const isUserIn = condition.includes(pathname);
+
+  return !isUserIn ? <Header /> : null;
+};
+
 const Routes = (
   <BrowserRouter>
+    {renderHeaderComponent()}
+
     <Switch>
       <Suspense fallback={<div>Loading...</div>}>
         {routerPaths.map(({ path, name, component, props }) => (

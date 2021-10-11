@@ -7,7 +7,8 @@ const AppWrapper = styled.div`
   background-color: #1b262c;
   color: #bbe1fa;
   margin: 0 auto;
-  padding: 10px;
+  padding: 70px 10px;
+  height: 100vh;
 `;
 
 export default AppWrapper;
