@@ -23,8 +23,6 @@ const Home = () => {
     };
   }, [dispatch]);
 
-  console.log('charactersData :>> ', charactersData);
-
   if (isError) return <h1>Fetchin error </h1>;
   if (isFetching) return <h1>Loading </h1>;
 
