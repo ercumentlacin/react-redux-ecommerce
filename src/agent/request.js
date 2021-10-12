@@ -1,11 +1,14 @@
 import axios from 'axios';
 
+const params = new URLSearchParams([['key', process.env.REACT_APP_API_KEY]]);
+
 const request = axios.create({
-  baseURL: 'https://612cd1bcab461c00178b5ee4.mockapi.io/api/v1/',
+  baseURL: 'https://identitytoolkit.googleapis.com/v1',
   timeout: 1000,
   headers: {
     'Content-Type': 'application/json',
   },
+  params,
 });
 
 export default request;
