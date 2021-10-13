@@ -1,7 +1,9 @@
 import createCart from 'actions/cart';
 import signUpAction from 'actions/signUp';
-import { useState } from 'react';
+import { getCookie } from 'helpers';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 import Wrapper from './register.styled';
 
@@ -30,12 +32,20 @@ const renderFields = ({ formData: values, onChange }) =>
 const Register = () => {
   const signUp = useSelector((state) => state.signUp);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const [formData, setFormData] = useState({
     email: '',
     password: '',
     returnSecureToken: true,
   });
+
+  useEffect(() => {
+    const condition = signUp.userData.email.length || getCookie('email');
+    if (condition) {
+      history.push('/');
+    }
+  }, [history, signUp.userData.email.length]);
 
   const { email } = formData;
 

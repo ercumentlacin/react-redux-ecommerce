@@ -8,7 +8,7 @@ const AppWrapper = styled.div`
   color: #bbe1fa;
   margin: 0 auto;
   padding: 70px 10px;
-  height: 100vh;
+  min-height: 100vh;
 `;
 
 export default AppWrapper;

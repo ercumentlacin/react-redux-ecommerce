@@ -1,3 +1,4 @@
+import { getCookie } from 'helpers';
 import PropTypes from 'prop-types';
 import { Redirect, Route, withRouter } from 'react-router-dom';
 
@@ -13,7 +14,7 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
     <Route
       {...rest}
       render={(props) =>
-        localStorage.getItem('user') ? (
+        getCookie('token') ? (
           <Component {...props} />
         ) : (
           <Redirect
