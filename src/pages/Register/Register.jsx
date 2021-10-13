@@ -41,11 +41,11 @@ const Register = () => {
   });
 
   useEffect(() => {
-    const condition = signUp.userData.email.length || getCookie('email');
+    const condition = signUp.userData.email?.length || getCookie('email');
     if (condition) {
       history.push('/');
     }
-  }, [history, signUp.userData.email.length]);
+  }, [history, signUp.userData.email?.length]);
 
   const { email } = formData;
 

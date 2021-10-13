@@ -13,11 +13,11 @@ export const signUpService = async (formData) => {
   return response;
 };
 
-const userId = getCookie('email').split('@')[0];
+const userId = getCookie('email')?.split('@')[0];
 
 export const CartService = {
   deleteCartById: (cartId) => firebaseRequest.delete(`/users/${cartId}.json`),
-  updateCartById: (cart) =>
+  updateCartItem: (cart) =>
     firebaseRequest.put(`/users/${userId}/cart.json`, cart),
   getCart: () => firebaseRequest.get(`/users/${userId}/cart.json`),
   addCartItem: (cartItem) =>

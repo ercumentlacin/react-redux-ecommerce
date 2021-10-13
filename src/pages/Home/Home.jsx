@@ -11,6 +11,8 @@ const Home = () => {
   const { charactersData, isError, isFetching } = useSelector(
     (state) => state.characters
   );
+  const cart = useSelector((state) => state.cart);
+  console.log('cart :>> ', cart);
 
   useEffect(() => {
     let mounted = true;
@@ -31,7 +33,7 @@ const Home = () => {
   const renderCharacterList = () =>
     charactersData.length > 0 &&
     charactersData.map((character) => (
-      <Character key={character.id} {...character} />
+      <Character key={character.id} {...character} cartList={cart.cart} />
     ));
 
   return (

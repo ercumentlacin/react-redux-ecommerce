@@ -48,9 +48,7 @@ const cartReducer = (state = initialState, action) => {
       return {
         ...state,
         error: null,
-        user: null,
         pending: true,
-        cart: [],
       };
     }
 
@@ -61,7 +59,6 @@ const cartReducer = (state = initialState, action) => {
         ...state,
         error: null,
         pending: false,
-        cart: [],
         user: email,
       };
     }
@@ -71,8 +68,6 @@ const cartReducer = (state = initialState, action) => {
         ...state,
         pending: false,
         error: action.payload,
-        user: null,
-        cart: [],
       };
     }
 
@@ -108,6 +103,31 @@ const cartReducer = (state = initialState, action) => {
         pending: false,
         error: action.payload,
         cart: [],
+      };
+    }
+
+    case CART.UPDATE_USER_CART_PENDING: {
+      return {
+        ...state,
+        error: null,
+        pending: true,
+      };
+    }
+
+    case CART.UPDATE_USER_CART_SUCCESS: {
+      return {
+        ...state,
+        error: null,
+        pending: false,
+        cart: action.payload,
+      };
+    }
+
+    case CART.UPDATE_USER_CART_FAILURE: {
+      return {
+        ...state,
+        pending: false,
+        error: action.payload,
       };
     }
 

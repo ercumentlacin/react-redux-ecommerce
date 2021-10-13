@@ -1,18 +1,22 @@
-import { addCartItemAction, addToCart } from 'actions/cart';
+/* eslint-disable no-debugger */
+import { addCartItemAction, updateCartAction } from 'actions/cart';
 import Modal from 'components/Modal/Modal';
 import useModal from 'Hooks/useModal';
 import PropTypes from 'prop-types';
 import { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 import WrapperCharacter from './scCharacter';
 
 const modalRoot = document.getElementById('modal-root');
 
-const Character = ({ name, image, episode, id: characterId }) => {
+const Character = ({ name, image, episode, id, cartList }) => {
   const dispatch = useDispatch();
   const [isModalShow, setIsModalShow] = useState(false);
   const modalRef = useRef(null);
+
+  const history = useHistory();
 
   const handleShowModal = () => {
     setIsModalShow(true);
@@ -29,12 +33,25 @@ const Character = ({ name, image, episode, id: characterId }) => {
       name,
       image,
       price: episode.length * 10,
-      characterId,
+      characterId: id,
       quantity: 1,
     };
 
-    dispatch(addToCart(data));
-    dispatch(addCartItemAction(data));
+    const itemInBasket = cartList.some((item) => item.characterId === id);
+    if (!itemInBasket) {
+      dispatch(addCartItemAction(data));
+    } else {
+      const newCart = cartList.map((item) => {
+        if (item.characterId === id) {
+          item.quantity += 1;
+        }
+        return item;
+      });
+
+      dispatch(updateCartAction(newCart));
+    }
+
+    history.push('/');
   };
 
   const keyHandler = (e) =>
@@ -79,6 +96,7 @@ Character.propTypes = {
   image: PropTypes.string.isRequired,
   episode: PropTypes.arrayOf(PropTypes.string).isRequired,
   id: PropTypes.number.isRequired,
+  cartList: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default Character;
