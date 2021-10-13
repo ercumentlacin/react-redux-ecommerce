@@ -1,9 +1,7 @@
-/* http://meyerweb.com/eric/tools/css/reset/ 
-   v2.0 | 20110126
-   License: none (public domain)
-*/
+import { createGlobalStyle } from 'styled-components';
 
-html,
+const GlobalStyle = createGlobalStyle`
+  html,
 body,
 div,
 span,
@@ -141,3 +139,6 @@ body {
   background-color: #1b262c;
   min-height: 100vh;
 }
+`;
+
+export default GlobalStyle;
