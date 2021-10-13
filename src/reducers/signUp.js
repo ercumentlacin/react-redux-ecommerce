@@ -16,12 +16,13 @@ const user = (state = initialState, action) => {
     case SIGN_UP.SIGN_UP_REQUEST:
       return { ...state, isFetching: true, userData: {}, isError: false };
     case SIGN_UP.SIGN_UP_SUCCESS: {
-      const { idToken, expiresIn } = action.payload;
+      const { idToken, expiresIn, email } = action.payload;
       setCookie('token', idToken, expiresIn);
+      setCookie('email', email, expiresIn);
 
       return {
         ...state,
-        userData: action.data,
+        userData: action.payload,
         isFetching: false,
         isError: false,
       };

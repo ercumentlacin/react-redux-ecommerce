@@ -18,10 +18,10 @@ const signUpFailure = (payload) => ({
 const signUpAction = (formdata) => async (dispatch) => {
   dispatch(signUpPendding());
   try {
-    const response = await signUpService(formdata);
-    dispatch(signUpSuccess(response.data));
+    const { data } = await signUpService(formdata);
+    dispatch(signUpSuccess(data));
   } catch (error) {
-    dispatch(signUpFailure(error));
+    dispatch(signUpFailure(error.response.data.error.errors[0].message));
   }
 };
 

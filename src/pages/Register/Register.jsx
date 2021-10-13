@@ -1,14 +1,35 @@
+import createCart from 'actions/cart';
 import signUpAction from 'actions/signUp';
-import Form from 'components/Form';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Wrapper from './register.styled';
 
+const field = ['email', 'password'];
+
+const renderFields = ({ formData: values, onChange }) =>
+  field.map((name) => (
+    <div key={name} className="field">
+      <label className="label" htmlFor="email">
+        <span>{name.charAt(0).toUpperCase() + name.slice(1)}</span>
+        <div className="control">
+          <input
+            id={name}
+            className="input"
+            type={name}
+            placeholder={`Please enter your ${name} `}
+            value={values[name]}
+            onChange={onChange}
+            name={name}
+          />
+        </div>
+      </label>
+    </div>
+  ));
+
 const Register = () => {
   const signUp = useSelector((state) => state.signUp);
   const dispatch = useDispatch();
-  console.log('signUp :>> ', signUp);
 
   const [formData, setFormData] = useState({
     email: '',
@@ -16,49 +37,36 @@ const Register = () => {
     returnSecureToken: true,
   });
 
-  const { email, password } = formData;
+  const { email } = formData;
 
-  const onChangeInput = (e) =>
+  const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const formSubmit = (e) => {
+  const formSubmit = async (e) => {
     e.preventDefault();
     console.log(formData);
 
     dispatch(signUpAction(formData));
+    dispatch(createCart({ email, cart: [] }));
   };
+
+  console.log('signUp :>> ', signUp);
 
   return (
     <Wrapper>
       <h1>Signup</h1>
 
-      <Form onSubmit={formSubmit}>
-        <label htmlFor="email">
-          <span>Your e-mail</span>
-          <input
-            type="email"
-            placeholder="name@gmail.com"
-            name="email"
-            id="email"
-            value={email}
-            onChange={onChangeInput}
-          />
-        </label>
+      <form onSubmit={formSubmit}>
+        {renderFields({ formData, onChange })}
 
-        <label htmlFor="password">
-          <span>Password</span>
-          <input
-            type="password"
-            placeholder="at least 6 characters"
-            name="password"
-            id="password"
-            value={password}
-            onChange={onChangeInput}
-          />
-        </label>
-
-        <button type="submit">Signup</button>
-      </Form>
+        <div className="field">
+          <div className="control">
+            <button type="submit" className="button is-link">
+              Signup
+            </button>
+          </div>
+        </div>
+      </form>
     </Wrapper>
   );
 };

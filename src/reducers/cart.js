@@ -1,7 +1,11 @@
 import CART from 'constants/cart';
+import { getCookie } from 'helpers';
 
 const initialState = {
   cart: [],
+  pending: false,
+  error: null,
+  user: null,
 };
 
 const cartReducer = (state = initialState, action) => {
@@ -39,6 +43,38 @@ const cartReducer = (state = initialState, action) => {
           return item;
         }),
       };
+
+    case CART.CREATSE_USER_CART_PENDING: {
+      return {
+        ...state,
+        error: null,
+        user: null,
+        pending: true,
+        cart: [],
+      };
+    }
+
+    case CART.CREATSE_USER_CART_SUCCESS: {
+      const email = getCookie('email');
+      console.log('email :>> ', email);
+      return {
+        ...state,
+        error: null,
+        pending: false,
+        cart: [],
+        user: email,
+      };
+    }
+
+    case CART.CREATSE_USER_CART_FAILURE: {
+      return {
+        ...state,
+        pending: false,
+        error: action.payload,
+        user: null,
+        cart: [],
+      };
+    }
 
     default:
       return state;
