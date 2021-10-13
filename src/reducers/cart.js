@@ -76,6 +76,41 @@ const cartReducer = (state = initialState, action) => {
       };
     }
 
+    case CART.GET_USER_CART_PENDING: {
+      return {
+        ...state,
+        error: null,
+        pending: true,
+        cart: [],
+        user: getCookie('email'),
+      };
+    }
+
+    case CART.GET_USER_CART_SUCCESS: {
+      const result = [];
+      const fetchResult = action.payload;
+
+      Object.entries(fetchResult).forEach(([key, value]) => {
+        result.push({ ...value, id: key });
+      });
+
+      return {
+        ...state,
+        error: null,
+        pending: false,
+        cart: result,
+      };
+    }
+
+    case CART.GET_USER_CART_FAILURE: {
+      return {
+        ...state,
+        pending: false,
+        error: action.payload,
+        cart: [],
+      };
+    }
+
     default:
       return state;
   }

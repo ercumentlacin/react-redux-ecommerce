@@ -1,6 +1,6 @@
 import CART from 'constants/cart';
 
-import { UsersService } from '../services';
+import { CartService, UsersService } from '../services';
 
 const addToCart = (data) => ({
   type: CART.ADD_CART,
@@ -36,6 +36,20 @@ const createUserCartFailure = (error) => ({
   payload: error,
 });
 
+const getUserCartPending = () => ({
+  type: CART.GET_USER_CART_PENDING,
+});
+
+const getUserCartSuccess = (data) => ({
+  type: CART.GET_USER_CART_SUCCESS,
+  payload: data,
+});
+
+const getUserCartFailure = (error) => ({
+  type: CART.GET_USER_CART_FAILURE,
+  payload: error,
+});
+
 const createCart = (userCart) => async (dispatch) => {
   dispatch(createUserCartPending());
   try {
@@ -46,11 +60,33 @@ const createCart = (userCart) => async (dispatch) => {
   }
 };
 
+const addCartItemAction = (cartItem) => async (dispatch) => {
+  dispatch(createUserCartPending());
+  try {
+    const { data } = await CartService.addCartItem(cartItem);
+    dispatch(createUserCartSuccess(data));
+  } catch (error) {
+    dispatch(createUserCartFailure(error));
+  }
+};
+
+const getCartAction = () => async (dispatch) => {
+  dispatch(getUserCartPending());
+  try {
+    const { data } = await CartService.getCart();
+    dispatch(getUserCartSuccess(data));
+  } catch (error) {
+    dispatch(getUserCartFailure(error));
+  }
+};
+
 export default createCart;
 
 export {
+  addCartItemAction,
   addToCart,
   decreaseCartItemCount,
+  getCartAction,
   increaseCartItemCount,
   removeFromCart,
 };

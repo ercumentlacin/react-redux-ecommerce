@@ -1,4 +1,4 @@
-import { addToCart } from 'actions/cart';
+import { addCartItemAction, addToCart } from 'actions/cart';
 import Modal from 'components/Modal/Modal';
 import useModal from 'Hooks/useModal';
 import PropTypes from 'prop-types';
@@ -9,7 +9,7 @@ import WrapperCharacter from './scCharacter';
 
 const modalRoot = document.getElementById('modal-root');
 
-const Character = ({ name, image, episode }) => {
+const Character = ({ name, image, episode, id: characterId }) => {
   const dispatch = useDispatch();
   const [isModalShow, setIsModalShow] = useState(false);
   const modalRef = useRef(null);
@@ -25,7 +25,16 @@ const Character = ({ name, image, episode }) => {
   };
 
   const addItemCart = () => {
-    dispatch(addToCart({ name, image, price: episode.length * 10 }));
+    const data = {
+      name,
+      image,
+      price: episode.length * 10,
+      characterId,
+      quantity: 1,
+    };
+
+    dispatch(addToCart(data));
+    dispatch(addCartItemAction(data));
   };
 
   const keyHandler = (e) =>
@@ -69,6 +78,7 @@ Character.propTypes = {
   name: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
   episode: PropTypes.arrayOf(PropTypes.string).isRequired,
+  id: PropTypes.number.isRequired,
 };
 
 export default Character;

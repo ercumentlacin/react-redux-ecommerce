@@ -1,3 +1,4 @@
+import { getCartAction } from 'actions/cart';
 import fetchCharacters from 'actions/characters';
 import Character from 'components/Character';
 import { useEffect } from 'react';
@@ -16,6 +17,7 @@ const Home = () => {
 
     if (mounted) {
       dispatch(fetchCharacters());
+      dispatch(getCartAction());
     }
 
     return () => {
