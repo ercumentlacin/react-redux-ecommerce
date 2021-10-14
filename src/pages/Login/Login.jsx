@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import signInRequest from 'actions/signInAction';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import WrapperLogin from './scHome';
@@ -7,7 +9,7 @@ const field = ['email', 'password'];
 
 const renderFields = ({ values, onChange }) =>
   field.map((name) => (
-    <div className="field">
+    <div key={name} className="field">
       <label className="label" htmlFor="email">
         <span>{name.charAt(0).toUpperCase() + name.slice(1)}</span>
         <div className="control">
@@ -33,6 +35,15 @@ const renderFields = ({ values, onChange }) =>
 }
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const { isSignIn } = useSelector((state) => state.signIn);
+
+  useEffect(() => {
+    if (isSignIn) {
+      window.location.href = '/';
+    }
+  }, [isSignIn]);
+
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -40,7 +51,7 @@ const Login = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log('onSubmit :>> ', onSubmit);
+    dispatch(signInRequest({ ...formData, returnSecureToken: true }));
   };
 
   const onChange = (e) =>
