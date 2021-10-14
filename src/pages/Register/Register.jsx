@@ -1,4 +1,3 @@
-import createCart from 'actions/cart';
 import signUpAction from 'actions/signUp';
 import { getCookie } from 'helpers';
 import { useEffect, useState } from 'react';
@@ -47,8 +46,6 @@ const Register = () => {
     }
   }, [history, signUp.userData.email?.length]);
 
-  const { email } = formData;
-
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
@@ -57,7 +54,6 @@ const Register = () => {
     console.log(formData);
 
     dispatch(signUpAction(formData));
-    dispatch(createCart({ email, cart: [] }));
   };
 
   console.log('signUp :>> ', signUp);

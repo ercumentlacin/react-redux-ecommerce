@@ -1,26 +1,6 @@
 import CART from 'constants/cart';
 
-import { CartService, UsersService } from '../services';
-
-const addToCart = (data) => ({
-  type: CART.ADD_CART,
-  payload: data,
-});
-
-const removeFromCart = (id) => ({
-  type: CART.REMOVE_CART,
-  payload: id,
-});
-
-const increaseCartItemCount = (id) => ({
-  type: CART.INCREASE_CART,
-  payload: id,
-});
-
-const decreaseCartItemCount = (id) => ({
-  type: CART.DECREASE_CART,
-  payload: id,
-});
+import { CartService } from '../services';
 
 const createUserCartPending = () => ({
   type: CART.CREATSE_USER_CART_PENDING,
@@ -64,16 +44,6 @@ const updateUserCartFailure = (error) => ({
   payload: error,
 });
 
-const createCart = (userCart) => async (dispatch) => {
-  dispatch(createUserCartPending());
-  try {
-    const { data } = await UsersService.createUserCart(userCart);
-    dispatch(createUserCartSuccess(data));
-  } catch (error) {
-    dispatch(createUserCartFailure(error));
-  }
-};
-
 const getCartAction = () => async (dispatch) => {
   dispatch(getUserCartPending());
   try {
@@ -108,14 +78,4 @@ const updateCartAction = (cartItem) => async (dispatch) => {
   }
 };
 
-export default createCart;
-
-export {
-  addCartItemAction,
-  addToCart,
-  decreaseCartItemCount,
-  getCartAction,
-  increaseCartItemCount,
-  removeFromCart,
-  updateCartAction,
-};
+export { addCartItemAction, getCartAction, updateCartAction };
