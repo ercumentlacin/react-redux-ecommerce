@@ -4,6 +4,7 @@ import { BrowserRouter, Switch } from 'react-router-dom';
 
 import ProtectedRoute from './ProtectedRoute';
 
+const Basket = lazy(() => import('pages/Basket'));
 const Home = lazy(() => import('pages/Home'));
 const Login = lazy(() => import('pages/Login'));
 const Register = lazy(() => import('pages/Register'));
@@ -27,6 +28,13 @@ const routerPaths = [
     path: '/register',
     name: 'register',
     component: Register,
+    exact: false,
+    props: {},
+  },
+  {
+    path: '/basket',
+    name: 'basket',
+    component: Basket,
     exact: false,
     props: {},
   },

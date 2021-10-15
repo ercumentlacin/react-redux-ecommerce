@@ -12,12 +12,11 @@ const Home = () => {
     (state) => state.characters
   );
   const cart = useSelector((state) => state.cart);
-  console.log('cart :>> ', cart);
 
   useEffect(() => {
     let mounted = true;
 
-    if (mounted) {
+    if (mounted && !charactersData.length) {
       dispatch(fetchCharacters());
       dispatch(getCartAction());
     }
