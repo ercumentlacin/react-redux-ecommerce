@@ -24,7 +24,7 @@ const Home = () => {
     return () => {
       mounted = false;
     };
-  }, [dispatch]);
+  }, [charactersData.length, dispatch]);
 
   if (isError) return <h1>Fetchin error </h1>;
   if (isFetching) return <h1>Loading </h1>;
@@ -37,8 +37,6 @@ const Home = () => {
 
   return (
     <>
-      <h1>Home</h1>
-
       <CharacterList>{renderCharacterList()}</CharacterList>
     </>
   );
