@@ -17,15 +17,12 @@ const Item = styled.div`
   border-bottom: 1px solid #ccc;
 
   .left {
-    border-radius: 10px;
     img {
+      border-radius: 20px;
       width: 100px;
       height: 100px;
       margin-right: 10px;
     }
-  }
-
-  .right {
   }
 `;
 
@@ -45,9 +42,6 @@ const Right = styled.div`
       font-size: 0.9rem;
       color: hsl(204 86% 86% / 70%);
     }
-  }
-
-  .bottom {
   }
 `;
 

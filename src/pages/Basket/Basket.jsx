@@ -1,4 +1,4 @@
-import { getCartAction } from 'actions/cart';
+import { getCartAction, updateCartAction } from 'actions/cart';
 import Spinner from 'components/Spinner/Spinner';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,9 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import BasketSc from './scBasket';
 
 const Basket = () => {
-  console.log('hello :>> ', 'basket page');
-  // eslint-disable-next-line no-unused-vars
-  const { cart, error, pending, user } = useSelector((state) => state.cart);
+  const { cart, pending } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -22,6 +20,26 @@ const Basket = () => {
       mounted = false;
     };
   }, [cart.length, dispatch]);
+
+  const handleItemQuantity = (id, type) => {
+    const productIncreaseOrDescrease = cart.map((item) => {
+      if (item.characterId === id) {
+        if (type === 'plus') {
+          item.quantity += 1;
+        } else if (type === 'minus') {
+          item.quantity -= 1;
+        }
+      }
+      return item;
+    });
+
+    const productRemove = cart.filter((item) => item.characterId !== id);
+
+    const newCart =
+      type === 'remove' ? productRemove : productIncreaseOrDescrease;
+
+    dispatch(updateCartAction(newCart));
+  };
 
   const renderBasketItems = () =>
     cart.map((item) => (
@@ -38,17 +56,27 @@ const Basket = () => {
 
           <BasketSc.Bottom>
             <div className="left">
-              <button type="button">
+              <button
+                onClick={() => handleItemQuantity(item.characterId, 'minus')}
+                type="button"
+                disabled={item.quantity === 1}
+              >
                 <i className="fas fa-minus" />
               </button>
               <p>{item.quantity}</p>
-              <button type="button">
+              <button
+                onClick={() => handleItemQuantity(item.characterId, 'plus')}
+                type="button"
+              >
                 <i className="fas fa-plus" />
               </button>
             </div>
 
             <div className="trash">
-              <button type="button">
+              <button
+                onClick={() => handleItemQuantity(item.characterId, 'remove')}
+                type="button"
+              >
                 <i className="fas fa-trash-alt" />
               </button>
             </div>
